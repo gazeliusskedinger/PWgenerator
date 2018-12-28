@@ -24,14 +24,20 @@ public class Decoy extends X{
 
     private void genDecoy(){
         ArrayList<String> pw = PWgen.getGenerate(leng,services);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Generated : "+dateFormat.format(date));
         for(int i = 0; i < services.size(); i++) {
             if (i % 50 == 0) {
-                println("------------------------------------------------------------------------");
-                println("            Service           |               Password");
-                println("------------------------------------------------------------------------");
+                sb.append("\n------------------------------------------------------------------------\n"+
+                        "            Service           |               Password\n"+
+                        "------------------------------------------------------------------------\n");
             }
-            println(decoyFormater(services.get(i),pw.get(i)));
+            sb.append(decoyFormater(services.get(i),pw.get(i))+"\n");
         }
+        String output = sb.toString();
+        println(output);
+        writeToFile(dateFormatFileName.format(date)+"Decoy.txt",output);
+
     }
 
     /**

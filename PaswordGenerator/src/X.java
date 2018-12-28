@@ -1,7 +1,18 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public abstract class X {
+
+    protected DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    protected DateFormat dateFormatFileName = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    protected Date date = new Date();
+
 
     /**
      * Extra over all is just a class to make the everyday coding stuff easier to write.
@@ -51,23 +62,47 @@ public abstract class X {
 
     /**
      *
-     * @param filepath
+     * @param filePath
      * @return
      */
 
-    protected static String readFile(String filepath){
-        String menu = "";
-        File file = new File(filepath);
+    protected static String readFile(String filePath){
+        String text = "";
+        File file = new File(filePath);
         try {
             Scanner in = new Scanner(file);
             while (in.hasNextLine()) {
-                menu = menu+in.nextLine()+"\n";
+                text = text+in.nextLine()+"\n";
             }
             in.close();
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return menu;
+        return text;
+    }
+
+    /**
+     * Makes a file
+     * @param filePath
+     * @param textToWrite
+     */
+
+    protected static void writeToFile(String filePath, String textToWrite){
+        try {
+            File file = new File(filePath);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            boolean fileExists = file.createNewFile();
+            if(fileExists){
+                writer.append(textToWrite);
+            }
+            else{
+                writer.write(textToWrite);
+            }
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

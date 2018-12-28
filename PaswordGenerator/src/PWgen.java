@@ -14,23 +14,26 @@ public class PWgen extends X{
      * Make's the output header.
      * Is called from the Constructor
      */
+
     private void PWrun(int leng, int numbers){
         ArrayList<String> passes = generate(leng,numbers,3);
+        StringBuilder sb = new StringBuilder();
         int n = 0;
-
+        sb.append("Generated : "+dateFormat.format(date)+"\n");
         for(int i = 0; i < passes.size(); i=i+3) {
             if(i%50 == 0){
 
-                println("-----------------------------------------------------------------");
-                println("    Nr     |                     Password");
-                println("-----------------------------------------------------------------");
+                sb.append("-----------------------------------------------------------------\n" +
+                        "    Nr     |                     Password" +
+                        "\n-----------------------------------------------------------------\n");
 
             }
-
-            println(pwRowFormatter(n+1,passes.get(i),passes.get(i+1),passes.get(i+2)));
+            sb.append(pwRowFormatter(n+1,passes.get(i),passes.get(i+1),passes.get(i+2)+"\n"));
             n++;
-
         }
+        String output = sb.toString();
+        println(output);
+        writeToFile(dateFormatFileName.format(date)+"PwList.txt",output);
     }
 
     /**

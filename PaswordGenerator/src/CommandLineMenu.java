@@ -1,8 +1,6 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Date;
+
 
 class CommandLineMenu extends X {
 
@@ -13,9 +11,6 @@ class CommandLineMenu extends X {
     private int numbers;
     private int leng;
     private ArrayList<String> sal = new ArrayList<>();
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private Date date = new Date();
-    private final String sDate = dateFormat.format(date);
     private final String menuGuide = readFile("Menu_guide");
 
     /**
@@ -92,7 +87,6 @@ class CommandLineMenu extends X {
         leng = sc.nextInt();
 
         printEmptyRows();
-        println("Generated : "+sDate);
         new PWgen(leng,numbers);
         printEmptyRows();
 
@@ -119,7 +113,6 @@ class CommandLineMenu extends X {
 
             in = sc.nextLine();
             sal.add(in);
-            println(in);
             if(in.equals("-1")){
                 exit = true;
             }
@@ -132,7 +125,6 @@ class CommandLineMenu extends X {
         if(!exit){
 
             printEmptyRows();
-            println("Generated : "+date);
             new LLgen(sal,numbers);
 
         }
@@ -150,7 +142,6 @@ class CommandLineMenu extends X {
     private void makeDecoy(){
 
         printEmptyRows();
-        println("Generated : "+date);
         new Decoy(sal, leng);
         printEmptyRows();
 

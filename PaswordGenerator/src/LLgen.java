@@ -22,14 +22,19 @@ public class LLgen extends X{
      */
     public void llRunGen(ArrayList<String> pwl, int numbers){
         ArrayList<Integer> passl = genPass(pwl.size(), numbers);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Generated : "+dateFormat.format(date));
         for(int i = 0; i < pwl.size(); i++) {
             if (i % 50 == 0) {
-                System.out.println("-------------------------------------------------------------------------------------------");
-                System.out.println("            Service           |       Stuff        |                 Number");
-                System.out.println("-------------------------------------------------------------------------------------------");
+                sb.append("\n-------------------------------------------------------------------------------------------\n"+
+                        "            Service           |       Stuff        |                 Number\n"+
+                        "-------------------------------------------------------------------------------------------\n");
             }
-            System.out.println(lLRowFormatter(pwl.get(i),stuffGen(),passl.get(i)));
+            sb.append(lLRowFormatter(pwl.get(i),stuffGen(),passl.get(i))+"\n");
         }
+        String output = sb.toString();
+        println(output);
+        writeToFile(dateFormatFileName.format(date)+"LList.txt",output);
     }
 
     /**
