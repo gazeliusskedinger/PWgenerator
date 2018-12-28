@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Date;S
 import java.util.Scanner;
 
 public abstract class X {
@@ -33,7 +33,7 @@ public abstract class X {
     }
 
     /**
-     *  An easier random funktion
+     *  An easier random help funktion
      * @param max
      * @return
      */

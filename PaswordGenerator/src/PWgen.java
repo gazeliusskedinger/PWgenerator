@@ -1,11 +1,15 @@
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.LinkedHashSet;
+import java.security.SecureRandom;
 
 public class PWgen extends X{
+
     /**
      * Constructor
      * also runs the PWgen
      */
+
     public PWgen(int leng, int numbers) {
         PWrun(leng,numbers);
     }
@@ -45,7 +49,6 @@ public class PWgen extends X{
      * @param pass3
      * @return
      */
-    //TODO make the list variable depending on length of password and nestleing
 
     private String pwRowFormatter(int line, String pass1,String pass2,String pass3){
 
@@ -73,9 +76,6 @@ public class PWgen extends X{
 
     }
 
-    //TODO Hash from random instead example : https://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java
-    //TODO And Mix in specials
-
     /**
      * generates the password
      * @param leng
@@ -86,11 +86,9 @@ public class PWgen extends X{
 
     private static ArrayList<String> generate(int leng, int numbers, int nestled){
 
-        char[] dividers = {'{','}','[',']','(',')','!','|','/',':',';','=','!','&','?','#','%','<','>','*','-'};
-        char[] begEnd = {'=','!','&','?','#','%','<','>','*','-','_','|','/'};
-        char[] numLett ={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-                'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-                '1','2','3','4','5','6','7','8','9','0'};
+        char[] dividers = {'{','}','[',']','(',')','!','|','/',':',';','=','!','&','?','#','%','<','>','*','-','A','B','C','D','E','F','1','2','3','4','5','6','7','8','9','0'};
+        char[] begEnd = {'=','!','&','?','#','%','<','>','*','-','_','|','/','@','1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F'};
+
 
         ArrayList<String> pass = new ArrayList<>();
         LinkedHashSet<String> passes = new LinkedHashSet<>();
@@ -98,32 +96,34 @@ public class PWgen extends X{
         StringBuilder sb;
 
          while(passes.size() < numbers*nestled){
-            sb = new StringBuilder();
-            for (int i = 0; i < leng; i++) {
-                n = ran(100, 0);
-                if (i == 0 || i == leng - 1) {
-                    if (n >= 50) {
-                        sb.append(numLett[ran(numLett.length)]);
-                    } else {
-                        sb.append(begEnd[ran(begEnd.length)]);
-                    }
-                } else {
-                    if (n <= 20) {
-                        sb.append(dividers[ran(dividers.length)]);
-                    } else {
-                        sb.append(numLett[ran(numLett.length)]);
-                    }
-                }
-            }
-            sb.append(dividers[ran(dividers.length)]);
-            passes.add(sb.toString());
+             sb = new StringBuilder();
+             sb.append(begEnd[ran(begEnd.length)]+base64()+dividers[ran(dividers.length)]);
+             passes.add(sb.toString());
         }
-
         for (String str : passes){
             pass.add(str);
         }
-
         return pass;
+    }
 
+    /**
+     * generates the base64 encoded random text
+     * @return base64 encoding
+     */
+
+    private static String base64( ){
+        byte[] stuff = new byte[11];
+        final SecureRandom random = new SecureRandom();
+        String b64 = "";
+        try {
+            random.nextBytes(stuff);
+            Base64.Encoder enc = Base64.getEncoder();
+            b64 = enc.encodeToString(stuff);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        b64 = b64.substring(0,b64.length()-1); // remove's double ==
+        return b64;
     }
 }

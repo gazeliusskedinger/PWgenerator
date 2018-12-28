@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public class LLgen extends X{
-    private static char[] stuff = {'A','B','C','1','2','3','4','5','6'};
+    private static char[] stuff = {'A','B','C','D','E','F','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f'};
 
     /**
      * Constructor
